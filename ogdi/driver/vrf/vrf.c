@@ -17,6 +17,9 @@
  ******************************************************************************
  *
  * $Log: vrf.c,v $
+ * Revision 1.13  2004/02/18 21:49:18  warmerda
+ * Fixed typo in last fix.
+ *
  * Revision 1.12  2004/02/18 21:33:18  warmerda
  * free regex memory
  *
@@ -41,7 +44,7 @@
 #include "vrf.h"
 #include "datadict.h"
 
-ECS_CVSID("$Id: vrf.c,v 1.12 2004/02/18 21:33:18 warmerda Exp $");
+ECS_CVSID("$Id: vrf.c,v 1.13 2004/02/18 21:49:18 warmerda Exp $");
 
 /* layer oriented functions are keeped in data structure to simplify code */
 
@@ -213,7 +216,7 @@ ecs_Result *dyn_DestroyServer(s)
 
   free(spriv);
 
-  vrf_freeParseRegex();
+  vrf_freePathRegex();
 
   ecs_SetSuccess(&(s->result));
 
