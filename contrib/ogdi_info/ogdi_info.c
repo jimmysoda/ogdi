@@ -1,5 +1,5 @@
 /******************************************************************************
- * $Id: ogdi_info.c,v 1.6 2001/04/12 18:12:42 warmerda Exp $
+ * $Id: ogdi_info.c,v 1.7 2001/04/12 19:26:08 warmerda Exp $
  *
  * Project:  OGDI Contributed Clients
  * Purpose:  Simple console query program for testing OGDI.
@@ -20,6 +20,9 @@
  ******************************************************************************
  *
  * $Log: ogdi_info.c,v $
+ * Revision 1.7  2001/04/12 19:26:08  warmerda
+ * added RGB image support
+ *
  * Revision 1.6  2001/04/12 18:12:42  warmerda
  * Added lots of capabilities related to capabilities
  *
@@ -190,6 +193,7 @@ static void DumpRasterObject( ecs_Result * result, ecs_Family featureType,
 
 {
     int		i, xsize;
+    unsigned char *raw = (unsigned char *) ECSRASTER(result);
 
     xsize = ECSOBJECT(result).geom.ecs_Geometry_u.matrix.x.x_len;
 
@@ -207,12 +211,14 @@ static void DumpRasterObject( ecs_Result * result, ecs_Family featureType,
         else if( featureType == Image )
         {
             if( nDataType == 1 )
-                printf( "%d,%d,%d ", 
-                        ((unsigned char *) ECSRASTER(result))[i*3],
-                        ((unsigned char *) ECSRASTER(result))[i*3]+1,
-                        ((unsigned char *) ECSRASTER(result))[i*3]+2 );
+            {
+                if( raw[i*4+3] != 0 )
+                    printf( "%d,%d,%d ", raw[i*4], raw[i*4+1], raw[i*4+2] );
+                else
+                    printf( "<null> " );
+            }
             else if( nDataType == 2 )
-                printf( "%d ", ((unsigned char *) ECSRASTER(result))[i] );
+                printf( "%d ", raw[i] );
             else if( nDataType == 3 )
                 printf( "%d ", ((unsigned short *) ECSRASTER(result))[i] );
             else if( nDataType == 4 )
