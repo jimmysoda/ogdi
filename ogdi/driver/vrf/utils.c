@@ -17,6 +17,9 @@
  ******************************************************************************
  *
  * $Log: utils.c,v $
+ * Revision 1.10  2001/06/29 19:17:00  warmerda
+ * fixed unterminated 'temp' string
+ *
  * Revision 1.9  2001/06/21 20:30:15  warmerda
  * added ECS_CVSID
  *
@@ -28,7 +31,7 @@
 #include "ecs.h"
 #include "vrf.h"
 
-ECS_CVSID("$Id: utils.c,v 1.9 2001/06/21 20:30:15 warmerda Exp $");
+ECS_CVSID("$Id: utils.c,v 1.10 2001/06/29 19:17:00 warmerda Exp $");
 
 #ifdef _WINDOWS
 #define SEPARATOR '\\'
@@ -1936,12 +1939,14 @@ vrf_build_coverage_capabilities( ecs_Server *s, const char *coverage)
             name = (char*)get_table_element (2, row, table, NULL, &n);
             temp = (char*) malloc (strlen (fclass) + 1);
             strncpy (temp, name, strlen (fclass));
+            temp[strlen(fclass)] = '\0';
 	
             if (strcmp (fclass, temp) != 0) {
                 free (name);
                 name = (char*) get_table_element (4, row, table, NULL, &n);
             }
             free (temp);
+            free( fclass );
 
             vrf_build_layer_capabilities( s, coverage, name );
 
