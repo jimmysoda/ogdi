@@ -1,5 +1,5 @@
 /******************************************************************************
- * $Id: ogdi_import.c,v 1.11 2002/02/08 21:22:58 warmerda Exp $
+ * $Id: ogdi_import.c,v 1.12 2002/02/21 15:54:17 warmerda Exp $
  *
  * Project:  OGDI Contributed Clients
  * Purpose:  Simple console import to shapefile/raw raster.
@@ -20,6 +20,9 @@
  ******************************************************************************
  *
  * $Log: ogdi_import.c,v $
+ * Revision 1.12  2002/02/21 15:54:17  warmerda
+ * fixed bug with declaration of dst
+ *
  * Revision 1.11  2002/02/08 21:22:58  warmerda
  * fixed serious bug importing floating point fields of unknown precision
  *
@@ -757,7 +760,8 @@ static int RecomputeRegion( const char * output_projection,
 
 {
     ecs_Result *result;
-    projPJ      src, dst;
+    projPJ      src;
+    projPJ      dst;
     projUV      corners[4];
     ecs_Region  out_region;
     int         iCorner, src_xsize, src_ysize, max_dim;
