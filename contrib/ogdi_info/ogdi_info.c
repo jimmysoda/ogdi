@@ -1,5 +1,5 @@
 /******************************************************************************
- * $Id: ogdi_info.c,v 1.8 2001/04/19 05:28:50 warmerda Exp $
+ * $Id: ogdi_info.c,v 1.9 2001/07/17 19:08:01 warmerda Exp $
  *
  * Project:  OGDI Contributed Clients
  * Purpose:  Simple console query program for testing OGDI.
@@ -20,6 +20,9 @@
  ******************************************************************************
  *
  * $Log: ogdi_info.c,v $
+ * Revision 1.9  2001/07/17 19:08:01  warmerda
+ * Fixed reporting of Text layers.
+ *
  * Revision 1.8  2001/04/19 05:28:50  warmerda
  * improve region bounds reporting
  *
@@ -102,6 +105,8 @@ static void DumpCapabilities()
             printf( "Point " );
         if( layer->families[Line] )
             printf( "Line " );
+        if( layer->families[Text] )
+            printf( "Text " );
         if( layer->families[Image] )
             printf( "Image " );
         if( layer->families[Matrix] )
