@@ -17,6 +17,9 @@
  ******************************************************************************
  *
  * $Log: utils.c,v $
+ * Revision 1.15  2004/10/25 19:34:31  warmerda
+ * The Level "buffint" should be short, not int, when forming the metadata.
+ *
  * Revision 1.14  2004/02/18 21:33:18  warmerda
  * free regex memory
  *
@@ -43,7 +46,7 @@
 #include "ecs.h"
 #include "vrf.h"
 
-ECS_CVSID("$Id: utils.c,v 1.14 2004/02/18 21:33:18 warmerda Exp $");
+ECS_CVSID("$Id: utils.c,v 1.15 2004/10/25 19:34:31 warmerda Exp $");
 
 #ifdef _WINDOWS
 #define SEPARATOR '\\'
@@ -551,7 +554,7 @@ vrf_GetMetadata(s)
   row_type rowcomp;
   row_type rowfca;
   float buffloat;
-  int buffint;
+  short buffint;
   register ServerPrivateData *spriv = s->priv;
   char buffer[256];
   char tab[3][7]={"char","float","int"};
