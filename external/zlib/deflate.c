@@ -47,7 +47,7 @@
  *
  */
 
-/* $Id: deflate.c,v 1.1 2000/10/29 20:55:09 warmerda Exp $ */
+/* $Id: deflate.c,v 1.1.1.1 2000/10/29 20:55:09 warmerda Exp $ */
 
 #include "deflate.h"
 

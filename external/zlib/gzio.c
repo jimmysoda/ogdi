@@ -3,7 +3,7 @@
  * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
-/* $Id: gzio.c,v 1.1 2000/10/29 20:55:10 warmerda Exp $ */
+/* $Id: gzio.c,v 1.1.1.1 2000/10/29 20:55:10 warmerda Exp $ */
 
 #include <stdio.h>
 
