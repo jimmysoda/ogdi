@@ -18,6 +18,11 @@
  ******************************************************************************
  *
  * $Log: client.c,v $
+ * Revision 1.12  2003/08/27 05:26:36  warmerda
+ * Call ecs_SplitURL(NULL) in cln_DestroyClient() to free static resources.
+ * This makes use of memory checkers easier even though this wasn't a *real*
+ * memory leak.
+ *
  * Revision 1.11  2001/10/01 19:51:13  warmerda
  * fixed bug in cln_CalcCtlPoints() with 1 pixel regions
  *
@@ -42,7 +47,7 @@
 #include "gmath.h"
 #include <assert.h>
 
-ECS_CVSID("$Id: client.c,v 1.11 2001/10/01 19:51:13 warmerda Exp $");
+ECS_CVSID("$Id: client.c,v 1.12 2003/08/27 05:26:36 warmerda Exp $");
 
 /* 
    Definitions specific to c_interface 
@@ -473,6 +478,10 @@ ecs_Result *cln_DestroyClient(ClientID)
   msg = svr_DestroyServer(&(cln->s));
   cln_FreeClient(&cln);
   soc[ClientID] = NULL;
+
+  /* free regex resources for spliturl */
+  ecs_SplitURL( NULL, NULL, NULL, NULL );
+
   return msg;
 }
 
