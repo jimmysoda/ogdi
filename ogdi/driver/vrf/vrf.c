@@ -17,6 +17,9 @@
  ******************************************************************************
  *
  * $Log: vrf.c,v $
+ * Revision 1.10  2001/06/29 19:16:30  warmerda
+ * fixed memory leak if FCS not found
+ *
  * Revision 1.9  2001/06/21 20:30:15  warmerda
  * added ECS_CVSID
  *
@@ -32,7 +35,7 @@
 #include "vrf.h"
 #include "datadict.h"
 
-ECS_CVSID("$Id: vrf.c,v 1.9 2001/06/21 20:30:15 warmerda Exp $");
+ECS_CVSID("$Id: vrf.c,v 1.10 2001/06/29 19:16:30 warmerda Exp $");
 
 /* layer oriented functions are keeped in data structure to simplify code */
 
@@ -389,6 +392,9 @@ ecs_Result *dyn_SelectLayer(s,sel)
 
 
   if (!vrf_getFileNameFromFcs(s,lpriv)) {
+    free( lpriv->coverage );
+    free( lpriv->fclass );
+    free( lpriv->expression );
     free(s->layer[layer].priv);
     ecs_FreeLayer(s,layer);   
     return &(s->result);
