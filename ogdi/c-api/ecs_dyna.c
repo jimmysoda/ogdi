@@ -17,6 +17,9 @@
  ******************************************************************************
  *
  * $Log: ecs_dyna.c,v $
+ * Revision 1.4  2004/02/18 21:50:21  warmerda
+ * Added debug statement #ifdefed out.
+ *
  * Revision 1.3  2001/04/09 15:04:34  warmerda
  * applied new source headers
  *
@@ -24,7 +27,7 @@
 
 #include "ecs.h"
 
-ECS_CVSID("$Id: ecs_dyna.c,v 1.3 2001/04/09 15:04:34 warmerda Exp $");
+ECS_CVSID("$Id: ecs_dyna.c,v 1.4 2004/02/18 21:50:21 warmerda Exp $");
 
 #if !defined(MISSING_DLFCN_H)
 #include <dlfcn.h>
@@ -86,6 +89,9 @@ void *ecs_OpenDynamicLib(libname)
     strcat(temp,".so");
 
     handle = dlopen(temp,RTLD_LAZY);
+#ifdef notdef
+    printf( "dlopen(%s) error: %s\n", temp, dlerror() );
+#endif
     free(temp);
   }
   return handle;
