@@ -18,6 +18,9 @@
  ******************************************************************************
  *
  * $Log: vrfswq.c,v $
+ * Revision 1.3  2001/06/26 00:57:34  warmerda
+ * fixed strcasecmp on WIN32
+ *
  * Revision 1.2  2001/06/21 20:30:15  warmerda
  * added ECS_CVSID
  *
@@ -30,7 +33,7 @@
 #include "vrf.h"
 #include "swq.h"
 
-ECS_CVSID("$Id: vrfswq.c,v 1.2 2001/06/21 20:30:15 warmerda Exp $");
+ECS_CVSID("$Id: vrfswq.c,v 1.3 2001/06/26 00:57:34 warmerda Exp $");
 
 #ifndef __LINKLIST_H__
 #include "linklist.h"
@@ -46,6 +49,10 @@ ECS_CVSID("$Id: vrfswq.c,v 1.2 2001/06/21 20:30:15 warmerda Exp $");
 #endif
 #ifndef _MACHINE_
 #include "machine.h"
+#endif
+
+#ifdef WIN32
+#  define strcasecmp stricmp
 #endif
 
 typedef struct {

@@ -18,6 +18,9 @@
  ******************************************************************************
  *
  * $Log: swq.c,v $
+ * Revision 1.3  2001/06/26 00:57:34  warmerda
+ * fixed strcasecmp on WIN32
+ *
  * Revision 1.2  2001/06/21 20:30:15  warmerda
  * added ECS_CVSID
  *
@@ -33,7 +36,7 @@
 #include "swq.h"
 #include "ecs.h"
 
-ECS_CVSID("$Id: swq.c,v 1.2 2001/06/21 20:30:15 warmerda Exp $");
+ECS_CVSID("$Id: swq.c,v 1.3 2001/06/26 00:57:34 warmerda Exp $");
 
 #ifndef SWQ_MALLOC
 #define SWQ_MALLOC(x) malloc(x)
@@ -46,6 +49,10 @@ ECS_CVSID("$Id: swq.c,v 1.2 2001/06/21 20:30:15 warmerda Exp $");
 
 #ifndef FALSE
 #  define FALSE 0
+#endif
+
+#ifdef WIN32
+#  define strcasecmp stricmp
 #endif
 
 char	swq_error[1024];
