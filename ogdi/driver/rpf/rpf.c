@@ -17,6 +17,9 @@
  ******************************************************************************
  *
  * $Log: rpf.c,v $
+ * Revision 1.11  2001/08/27 14:56:29  warmerda
+ * RPF rasterinfo width fixed
+ *
  * Revision 1.10  2001/08/16 13:06:52  warmerda
  * ensure that only Matrix and Image are allowed by RPF SelectLayer
  *
@@ -37,7 +40,7 @@
 #include "rpf.h"
 #include "datadict.h"
 
-ECS_CVSID("$Id: rpf.c,v 1.10 2001/08/16 13:06:52 warmerda Exp $");
+ECS_CVSID("$Id: rpf.c,v 1.11 2001/08/27 14:56:29 warmerda Exp $");
 
 int colorintensity[6] = {0,63,105,147,189,255};
 
@@ -691,8 +694,8 @@ ecs_Result *dyn_GetRasterInfo(s)
 
   /* Put table contain in RasterInfo here */
   
-  rows = (int) ((region.north-region.south)/region.ns_res);
-  columns = (int) ((region.east-region.west)/region.ew_res);
+  rows = (int) floor((region.north-region.south)/region.ns_res + 0.5);
+  columns = (int) floor((region.east-region.west)/region.ew_res + 0.5);
 
   if (s->layer[s->currentLayer].sel.F == Matrix) {
     ecs_SetRasterInfo(&(s->result),columns,rows);
