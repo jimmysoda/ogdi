@@ -1,5 +1,5 @@
 /******************************************************************************
- * $Id: ogdi_import.c,v 1.5 2001/07/17 19:03:42 warmerda Exp $
+ * $Id: ogdi_import.c,v 1.6 2001/08/16 13:44:52 warmerda Exp $
  *
  * Project:  OGDI Contributed Clients
  * Purpose:  Simple console import to shapefile/raw raster.
@@ -20,6 +20,9 @@
  ******************************************************************************
  *
  * $Log: ogdi_import.c,v $
+ * Revision 1.6  2001/08/16 13:44:52  warmerda
+ * fixed roundoff bug xsize/ysize calc from region
+ *
  * Revision 1.5  2001/07/17 19:03:42  warmerda
  * Added support for exporting lines, text and areas.
  *
@@ -463,8 +466,8 @@ static void ImportMatrix( ecs_Region *region, const char * layer,
     if( CheckError( result ) )
         return;
 
-    xsize = (region->east - region->west) / region->ew_res;
-    ysize = (region->north - region->south) / region->ns_res;
+    xsize = (int) ((region->east - region->west) / region->ew_res + 0.5);
+    ysize = (int) ((region->north - region->south) / region->ns_res + 0.5);
 
 /* -------------------------------------------------------------------- */
 /*      Define the layer to select.                                     */
