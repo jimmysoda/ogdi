@@ -17,6 +17,9 @@
  ******************************************************************************
  *
  * $Log: feature.c,v $
+ * Revision 1.13  2004/04/04 04:33:01  warmerda
+ * added vrf_free_ObjAttributeBuffer
+ *
  * Revision 1.12  2004/02/19 05:46:28  warmerda
  * fixed memory leak of edge coords with dangles
  *
@@ -50,7 +53,7 @@
 #include "vrf.h"
 #include <assert.h>
 
-ECS_CVSID("$Id: feature.c,v 1.12 2004/02/19 05:46:28 warmerda Exp $");
+ECS_CVSID("$Id: feature.c,v 1.13 2004/04/04 04:33:01 warmerda Exp $");
 
 vpf_projection_type NOPROJ = {DDS, 0.0, 0.0, 0.0, 0.0, 0, 0.0, 0.0,
                               NULL, NULL, "Decimal Degrees     "};
@@ -1261,6 +1264,8 @@ int vrf_get_xy (table, row, pos, x, y)
 
   ***************************************************************************/
 
+static char *returnString = NULL;
+
 char *vrf_get_ObjAttributes(table, row_pos)
      vpf_table_type table;
      int32 row_pos;
@@ -1268,7 +1273,6 @@ char *vrf_get_ObjAttributes(table, row_pos)
   int i;
   char buffer[255];
   row_type row;
-  static char *returnString = NULL;
   int32 lenght;
   char temp1, *ptr1;
   float temp2;
@@ -1278,12 +1282,12 @@ char *vrf_get_ObjAttributes(table, row_pos)
   date_type temp6;
   long count;
 
-  row = read_row(row_pos,table);
-
   if (returnString != NULL) {
     free(returnString);
     returnString = NULL;
   }
+
+  row = read_row(row_pos,table);
 
   lenght = 1;
   returnString = (char *) malloc(lenght);
@@ -1400,6 +1404,16 @@ char *vrf_get_ObjAttributes(table, row_pos)
 
   free_row(row,table);
   return returnString;
+}
+
+void vrf_free_ObjAttributeBuffer()
+
+{
+    if( returnString != NULL )
+    {
+        free( returnString );
+        returnString = NULL;
+    }
 }
 
 int vrf_checkLayerTables(s,l)
