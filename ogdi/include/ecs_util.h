@@ -19,6 +19,9 @@
  ******************************************************************************
  *
  * $Log: ecs_util.h,v $
+ * Revision 1.12  2001/09/28 18:56:20  warmerda
+ * added OGDI_VERSION and OGDI_RELEASEDATE
+ *
  * Revision 1.11  2001/07/18 03:55:09  warmerda
  * Fixed case where DISABLE_CVSID is defined.
  *
@@ -41,6 +44,9 @@
 
 #ifndef ECS_UTIL
 #define ECS_UTIL 1
+
+#define OGDI_VERSION     310
+#define OGDI_RELEASEDATE 20010928
 
 #include <stdio.h>
 #include <stdlib.h>
