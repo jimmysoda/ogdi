@@ -17,6 +17,9 @@
  ******************************************************************************
  *
  * $Log: object.c,v $
+ * Revision 1.8  2004/10/19 14:17:03  warmerda
+ * primList leak fixed in vrf driver
+ *
  * Revision 1.7  2001/08/16 20:40:34  warmerda
  * applied VITD fixes - merge primitive lines into a feature
  *
@@ -31,7 +34,7 @@
 #include "ecs.h"
 #include "vrf.h"
 
-ECS_CVSID("$Id: object.c,v 1.7 2001/08/16 20:40:34 warmerda Exp $");
+ECS_CVSID("$Id: object.c,v 1.8 2004/10/19 14:17:03 warmerda Exp $");
 
 /* 
 ********************************************************************
@@ -756,6 +759,12 @@ _getNextObjectLine(s,l)
       edgeCount = l->nbfeature;
 
   while(!found && l->index < edgeCount) {
+
+    if( primList != NULL )
+    {
+        free( primList );
+        primList = NULL;
+    }
 
     _getPrimList( s, l, l->index, &line_id, &tile_id, &primCount, &primList,
                   (int32 *) &(l->index));
