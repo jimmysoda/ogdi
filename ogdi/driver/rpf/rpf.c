@@ -17,6 +17,10 @@
  ******************************************************************************
  *
  * $Log: rpf.c,v $
+ * Revision 1.12  2004/03/26 22:33:41  warmerda
+ * Fixed computation of nbfeature in dyn_SelectRegion() to avoid rounding
+ * error issues.  As per Bug 924250.
+ *
  * Revision 1.11  2001/08/27 14:56:29  warmerda
  * RPF rasterinfo width fixed
  *
@@ -40,7 +44,7 @@
 #include "rpf.h"
 #include "datadict.h"
 
-ECS_CVSID("$Id: rpf.c,v 1.11 2001/08/27 14:56:29 warmerda Exp $");
+ECS_CVSID("$Id: rpf.c,v 1.12 2004/03/26 22:33:41 warmerda Exp $");
 
 int colorintensity[6] = {0,63,105,147,189,255};
 
@@ -477,7 +481,9 @@ ecs_Result *dyn_SelectRegion(s,gr)
 
   if (s->currentLayer != -1) {
     s->layer[s->currentLayer].index = 0;
-    s->layer[s->currentLayer].nbfeature = (int) ((s->currentRegion.north - s->currentRegion.south)/s->currentRegion.ns_res);
+    s->layer[s->currentLayer].nbfeature = 
+        (int) ((s->currentRegion.north - s->currentRegion.south)
+               / s->currentRegion.ns_res + 0.5);
   }
 
   ecs_SetSuccess(&(s->result));
