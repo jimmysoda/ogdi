@@ -17,6 +17,9 @@
  ******************************************************************************
  *
  * $Log: vrf.c,v $
+ * Revision 1.15  2004/02/19 06:56:43  warmerda
+ * fixed serious bug in releaseAllLayers() with multiple layers
+ *
  * Revision 1.14  2004/02/19 05:59:22  warmerda
  * Removed temporary debug messages.
  *
@@ -47,7 +50,7 @@
 #include "vrf.h"
 #include "datadict.h"
 
-ECS_CVSID("$Id: vrf.c,v 1.14 2004/02/19 05:59:22 warmerda Exp $");
+ECS_CVSID("$Id: vrf.c,v 1.15 2004/02/19 06:56:43 warmerda Exp $");
 
 /* layer oriented functions are keeped in data structure to simplify code */
 
@@ -589,10 +592,11 @@ void
 vrf_releaseAllLayers(s)
      ecs_Server *s;
 {
-  int i;
+    int i;
 
-  for (i = 0; i < s->nblayer; ++i)
-    dyn_ReleaseLayer(s,&(s->layer[i].sel));
+    /* count down since nblayer will change as we go */
+    for (i = s->nblayer-1; i >= 0; i--)
+        dyn_ReleaseLayer(s,&(s->layer[i].sel));
 }
 
 /* ----------------------------------------------------------------------
