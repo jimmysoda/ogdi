@@ -1,5 +1,5 @@
 /******************************************************************************
- * $Id: ogdi_info.c,v 1.9 2001/07/17 19:08:01 warmerda Exp $
+ * $Id: ogdi_info.c,v 1.10 2001/08/17 00:37:15 warmerda Exp $
  *
  * Project:  OGDI Contributed Clients
  * Purpose:  Simple console query program for testing OGDI.
@@ -20,6 +20,9 @@
  ******************************************************************************
  *
  * $Log: ogdi_info.c,v $
+ * Revision 1.10  2001/08/17 00:37:15  warmerda
+ * updated formatting of capabilities bounds
+ *
  * Revision 1.9  2001/07/17 19:08:01  warmerda
  * Fixed reporting of Text layers.
  *
@@ -113,16 +116,18 @@ static void DumpCapabilities()
             printf( "Matrix " );
         printf( "\n" );
 
-        printf( "  Bounds: n=%g, s=%g, e=%g, w=%g, nsres=%g, ewres=%g\n", 
+        printf( "  Bounds: n=%.4f, s=%.4f, nsres=%g\n"
+                "          e=%.4f, w=%.4f, ewres=%g\n", 
                 layer->srs_north, 
                 layer->srs_south, 
+                layer->srs_nsres, 
                 layer->srs_east, 
                 layer->srs_west, 
-                layer->srs_nsres, 
                 layer->srs_ewres );
         if( layer->ll_bounds_set )
         {
-            printf( "  LLBounds: n=%g, s=%g, e=%g, w=%g\n", 
+            printf( "  LLBounds: n=%.14f, s=%.14f\n"
+                    "            e=%.14f, w=%.14f\n", 
                     layer->ll_north, 
                     layer->ll_south, 
                     layer->ll_east, 
