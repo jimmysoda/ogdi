@@ -1,5 +1,5 @@
 /******************************************************************************
- * $Id: ogdi_info.c,v 1.13 2004/10/26 19:37:52 warmerda Exp $
+ * $Id: ogdi_info.c,v 1.14 2004/10/26 19:45:53 warmerda Exp $
  *
  * Project:  OGDI Contributed Clients
  * Purpose:  Simple console query program for testing OGDI.
@@ -20,6 +20,9 @@
  ******************************************************************************
  *
  * $Log: ogdi_info.c,v $
+ * Revision 1.14  2004/10/26 19:45:53  warmerda
+ * Fixed last fix.
+ *
  * Revision 1.13  2004/10/26 19:37:52  warmerda
  * Close old clientid if multiple -u's met.
  * Report errors on illegal family specifications.
@@ -780,6 +783,7 @@ int main( int argc, char ** argv )
                 result = cln_DestroyClient(ClientID);
                 if( CheckError( result ) )
                     return( FALSE );
+                ecs_CleanUp( result );
                 ClientID = -1;
             }
 
