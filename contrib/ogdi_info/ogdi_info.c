@@ -1,5 +1,5 @@
 /******************************************************************************
- * $Id: ogdi_info.c,v 1.2 2000/11/23 19:10:36 warmerda Exp $
+ * $Id: ogdi_info.c,v 1.3 2001/02/19 04:46:13 warmerda Exp $
  *
  * Project:  OGDI Contributed Clients
  * Purpose:  Simple console query program for testing OGDI.
@@ -20,6 +20,9 @@
  ******************************************************************************
  *
  * $Log: ogdi_info.c,v $
+ * Revision 1.3  2001/02/19 04:46:13  warmerda
+ * use projUV, not UV
+ *
  * Revision 1.2  2000/11/23 19:10:36  warmerda
  * added copyright header
  *
@@ -173,7 +176,7 @@ static int AccessURL( char * url, ecs_Region * region )
 {
     ecs_Result *result;
     PJ	       *proj_defn;
-    UV	       proj_pnt;
+    projUV     proj_pnt;
 
 /* -------------------------------------------------------------------- */
 /*      Close old client if there is one active.                        */
