@@ -17,6 +17,9 @@
  ******************************************************************************
  *
  * $Log: feature.c,v $
+ * Revision 1.12  2004/02/19 05:46:28  warmerda
+ * fixed memory leak of edge coords with dangles
+ *
  * Revision 1.11  2003/05/22 17:04:05  warmerda
  * Removed debug statement.
  *
@@ -47,7 +50,7 @@
 #include "vrf.h"
 #include <assert.h>
 
-ECS_CVSID("$Id: feature.c,v 1.11 2003/05/22 17:04:05 warmerda Exp $");
+ECS_CVSID("$Id: feature.c,v 1.12 2004/02/19 05:46:28 warmerda Exp $");
 
 vpf_projection_type NOPROJ = {DDS, 0.0, 0.0, 0.0, 0.0, 0, 0.0, 0.0,
                               NULL, NULL, "Decimal Degrees     "};
@@ -962,6 +965,8 @@ int vrf_get_ring_coords (s,ring, face_id, start_edge, edgetable)
 #ifndef SKIP_BUG_741854_FIX
           if( edge_rec.id == start_edge && edge_rec.dir == start_dir )
           {
+              if (edge_rec.coords)
+                  xvt_free ((char*)edge_rec.coords);
               done = TRUE;
               continue;
           }
