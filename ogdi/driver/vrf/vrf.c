@@ -17,6 +17,9 @@
  ******************************************************************************
  *
  * $Log: vrf.c,v $
+ * Revision 1.9  2001/06/21 20:30:15  warmerda
+ * added ECS_CVSID
+ *
  * Revision 1.8  2001/06/20 21:49:31  warmerda
  * added improved query support (swq)
  *
@@ -28,6 +31,8 @@
 #include "ecs.h"
 #include "vrf.h"
 #include "datadict.h"
+
+ECS_CVSID("$Id: vrf.c,v 1.9 2001/06/21 20:30:15 warmerda Exp $");
 
 /* layer oriented functions are keeped in data structure to simplify code */
 

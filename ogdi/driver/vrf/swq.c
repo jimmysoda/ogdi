@@ -18,6 +18,9 @@
  ******************************************************************************
  *
  * $Log: swq.c,v $
+ * Revision 1.2  2001/06/21 20:30:15  warmerda
+ * added ECS_CVSID
+ *
  * Revision 1.1  2001/06/20 21:49:16  warmerda
  * New
  *
@@ -28,6 +31,9 @@
 #include <string.h>
 
 #include "swq.h"
+#include "ecs.h"
+
+ECS_CVSID("$Id: swq.c,v 1.2 2001/06/21 20:30:15 warmerda Exp $");
 
 #ifndef SWQ_MALLOC
 #define SWQ_MALLOC(x) malloc(x)

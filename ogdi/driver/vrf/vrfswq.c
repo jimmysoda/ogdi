@@ -18,6 +18,9 @@
  ******************************************************************************
  *
  * $Log: vrfswq.c,v $
+ * Revision 1.2  2001/06/21 20:30:15  warmerda
+ * added ECS_CVSID
+ *
  * Revision 1.1  2001/06/20 21:49:16  warmerda
  * New
  *
@@ -26,6 +29,8 @@
 #include "ecs.h"
 #include "vrf.h"
 #include "swq.h"
+
+ECS_CVSID("$Id: vrfswq.c,v 1.2 2001/06/21 20:30:15 warmerda Exp $");
 
 #ifndef __LINKLIST_H__
 #include "linklist.h"
