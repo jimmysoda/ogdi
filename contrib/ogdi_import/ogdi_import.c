@@ -1,5 +1,5 @@
 /******************************************************************************
- * $Id: ogdi_import.c,v 1.9 2001/11/14 04:55:47 warmerda Exp $
+ * $Id: ogdi_import.c,v 1.10 2001/12/11 18:34:18 warmerda Exp $
  *
  * Project:  OGDI Contributed Clients
  * Purpose:  Simple console import to shapefile/raw raster.
@@ -20,6 +20,9 @@
  ******************************************************************************
  *
  * $Log: ogdi_import.c,v $
+ * Revision 1.10  2001/12/11 18:34:18  warmerda
+ * fixed region handling if GetLayerRegion() fails - default to global bounds.
+ *
  * Revision 1.9  2001/11/14 04:55:47  warmerda
  * added -no-dict option
  *
@@ -911,7 +914,8 @@ int main( int argc, char ** argv )
 
             if( !set_region )
             {
-                ecs_Region   reg2;
+                ecs_Region   reg2 = *region;
+
                 GetLayerRegion( layer, &reg2 );
                 if( set_res )
                 {
