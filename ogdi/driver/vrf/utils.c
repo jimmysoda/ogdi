@@ -17,6 +17,11 @@
  ******************************************************************************
  *
  * $Log: utils.c,v $
+ * Revision 1.16  2004/10/26 19:57:36  warmerda
+ * Fixed problem where "reg" regular expression was freed, but the change
+ * was not recognised since compiled was not being reset.  Got rid of
+ * compiled flag entirely.
+ *
  * Revision 1.15  2004/10/25 19:34:31  warmerda
  * The Level "buffint" should be short, not int, when forming the metadata.
  *
@@ -46,7 +51,7 @@
 #include "ecs.h"
 #include "vrf.h"
 
-ECS_CVSID("$Id: utils.c,v 1.15 2004/10/25 19:34:31 warmerda Exp $");
+ECS_CVSID("$Id: utils.c,v 1.16 2004/10/26 19:57:36 warmerda Exp $");
 
 #ifdef _WINDOWS
 #define SEPARATOR '\\'
@@ -78,7 +83,7 @@ int vrf_parsePath(s,lpriv,sel)
  * ----------------------------------------------------------------------
  */
 
-static ecs_regexp *reg;
+static ecs_regexp *reg = NULL;
 
 int vrf_parsePathValue(s,request,fclass,coverage,expression)
      ecs_Server *s;
@@ -87,7 +92,6 @@ int vrf_parsePathValue(s,request,fclass,coverage,expression)
      char **coverage;
      char **expression;
 {
-  static int compiled = 0;
   char buffer[512],*temp;
   int i,pos;
 
@@ -124,9 +128,8 @@ int vrf_parsePathValue(s,request,fclass,coverage,expression)
     return 0;
   }
 
-  if (!compiled) {
+  if ( reg == NULL ) {
     reg = EcsRegComp("(.*)@(.*)");
-    compiled = 1;
   }
 
   if (!EcsRegExec(reg,temp,NULL)) {
