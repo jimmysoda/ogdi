@@ -1,5 +1,5 @@
 /******************************************************************************
- * $Id: ogdi_import.c,v 1.10 2001/12/11 18:34:18 warmerda Exp $
+ * $Id: ogdi_import.c,v 1.11 2002/02/08 21:22:58 warmerda Exp $
  *
  * Project:  OGDI Contributed Clients
  * Purpose:  Simple console import to shapefile/raw raster.
@@ -20,6 +20,9 @@
  ******************************************************************************
  *
  * $Log: ogdi_import.c,v $
+ * Revision 1.11  2002/02/08 21:22:58  warmerda
+ * fixed serious bug importing floating point fields of unknown precision
+ *
  * Revision 1.10  2001/12/11 18:34:18  warmerda
  * fixed region handling if GetLayerRegion() fails - default to global bounds.
  *
@@ -55,7 +58,7 @@
 #include "projects.h"
 
 #ifndef PJ_VERSION
-#define projPJ PJ
+#define projPJ PJ*
 #define projUV UV
 #endif
 
@@ -184,7 +187,7 @@ static void ImportVectors( ecs_Region *region, const char * layer,
     DBFHandle   hDBF;
     char	filename[1024];
     ecs_ObjAttributeFormat *oaf;
-    int		i, field_count, iText = -1;
+    int		i, field_count, iText = -1, nFld;
 
 /* -------------------------------------------------------------------- */
 /*      Select a region ... this should be overridable from the         */
@@ -248,22 +251,22 @@ static void ImportVectors( ecs_Region *region, const char * layer,
           case Varchar:
           case Longvarchar:
             if( oaf->oa.oa_val[i].lenght > 0 )
-                DBFAddField( hDBF, oaf->oa.oa_val[i].name,
-                             FTString, oaf->oa.oa_val[i].lenght, 0 );
+                nFld = DBFAddField( hDBF, oaf->oa.oa_val[i].name,
+                                    FTString, oaf->oa.oa_val[i].lenght, 0 );
             else
-                DBFAddField( hDBF, oaf->oa.oa_val[i].name,
-                             FTString, 64, 0 );
+                nFld = DBFAddField( hDBF, oaf->oa.oa_val[i].name,
+                                    FTString, 64, 0 );
             break;
 
           case Decimal:
           case Smallint:
           case Integer:
             if( oaf->oa.oa_val[i].lenght > 0 )
-                DBFAddField( hDBF, oaf->oa.oa_val[i].name,
-                             FTDouble, oaf->oa.oa_val[i].lenght, 0 );
+                nFld = DBFAddField( hDBF, oaf->oa.oa_val[i].name,
+                                    FTDouble, oaf->oa.oa_val[i].lenght, 0 );
             else 
-                DBFAddField( hDBF, oaf->oa.oa_val[i].name,
-                             FTString, 11, 0 );
+                nFld = DBFAddField( hDBF, oaf->oa.oa_val[i].name,
+                                    FTString, 11, 0 );
             break;
 
           case Numeric:
@@ -271,15 +274,28 @@ static void ImportVectors( ecs_Region *region, const char * layer,
           case Float:
           case Double:
             if( oaf->oa.oa_val[i].lenght > 0 )
-                DBFAddField( hDBF, oaf->oa.oa_val[i].name,
-                             FTDouble,
-                             oaf->oa.oa_val[i].lenght,
-                             oaf->oa.oa_val[i].precision );
+                nFld = DBFAddField( hDBF, oaf->oa.oa_val[i].name,
+                                    FTDouble,
+                                    oaf->oa.oa_val[i].lenght,
+                                    oaf->oa.oa_val[i].precision );
             else
-                DBFAddField( hDBF, oaf->oa.oa_val[i].name,
-                             FTString, 18, 7 );
+                nFld = DBFAddField( hDBF, oaf->oa.oa_val[i].name,
+                                    FTDouble, 18, 7 );
             break;
 
+          default:
+            nFld = 0;
+            fprintf( stderr, "Field %s of unrecognised type %d dropped.\n", 
+                     oaf->oa.oa_val[i].name, oaf->oa.oa_val[i].type );
+            break;
+        }
+
+        if( nFld == -1 )
+        {
+            fprintf( stderr, 
+                     "Field %s was not created due to a failure in DBFAddField()\n",
+                     oaf->oa.oa_val[i].name );
+                     
         }
     }
 
@@ -700,13 +716,13 @@ static void ImportImage( ecs_Region *region, const char * layer,
 /*                          ParseProjection()                           */
 /************************************************************************/
 
-projPJ *ParseProjection( const char *projection )
+projPJ ParseProjection( const char *projection )
 
 {
     char      wproj[1024];
     char      *proj_parms[30];
     int       parm_count = 0;
-    projPJ    *pj;
+    projPJ    pj;
 
 /* -------------------------------------------------------------------- */
 /*      Parse into tokens.                                              */
@@ -741,7 +757,7 @@ static int RecomputeRegion( const char * output_projection,
 
 {
     ecs_Result *result;
-    projPJ      *src, *dst;
+    projPJ      src, dst;
     projUV      corners[4];
     ecs_Region  out_region;
     int         iCorner, src_xsize, src_ysize, max_dim;
