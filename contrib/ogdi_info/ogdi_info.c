@@ -1,5 +1,5 @@
 /******************************************************************************
- * $Id: ogdi_info.c,v 1.10 2001/08/17 00:37:15 warmerda Exp $
+ * $Id: ogdi_info.c,v 1.11 2001/12/14 21:22:02 warmerda Exp $
  *
  * Project:  OGDI Contributed Clients
  * Purpose:  Simple console query program for testing OGDI.
@@ -20,6 +20,9 @@
  ******************************************************************************
  *
  * $Log: ogdi_info.c,v $
+ * Revision 1.11  2001/12/14 21:22:02  warmerda
+ * dont reproject to latlong if already latlong
+ *
  * Revision 1.10  2001/08/17 00:37:15  warmerda
  * updated formatting of capabilities bounds
  *
@@ -232,7 +235,8 @@ static int DumpGlobalRegion( ecs_Region * region, PJ * proj_defn )
 /*	Print the corner coordinates in lat/long.			*/
 /* -------------------------------------------------------------------- */
 #ifndef _WINDOWS    
-    if( proj_defn != NULL ) {
+    if( proj_defn != NULL )
+    {
         printf( "Lat/Long Corners\n" );
         
         proj_pnt.v = region->north;
@@ -413,7 +417,9 @@ static int AccessURL( char * url, ecs_Region * region )
     printf( "Projection = `%s'\n", ECSTEXT(result) );
 
 #ifndef _WINDOWS    
-    if( !bNoProj )
+    if( !bNoProj 
+        && strstr(ECSTEXT(result),"latlong") == NULL
+        && strstr(ECSTEXT(result),"longlat") == NULL )
         proj_defn = cln_ProjInit( ECSTEXT(result) );
 #endif
 
