@@ -18,6 +18,9 @@
  ******************************************************************************
  *
  * $Log: client.c,v $
+ * Revision 1.11  2001/10/01 19:51:13  warmerda
+ * fixed bug in cln_CalcCtlPoints() with 1 pixel regions
+ *
  * Revision 1.10  2001/08/16 15:34:23  warmerda
  * fixed roundoff bug with width/height in cln_ConvRegion
  *
@@ -39,7 +42,7 @@
 #include "gmath.h"
 #include <assert.h>
 
-ECS_CVSID("$Id: client.c,v 1.10 2001/08/16 15:34:23 warmerda Exp $");
+ECS_CVSID("$Id: client.c,v 1.11 2001/10/01 19:51:13 warmerda Exp $");
 
 /* 
    Definitions specific to c_interface 
@@ -3946,10 +3949,15 @@ int cln_CalcCtlPoints(ClientID,pts,error_message)
 
   /* Calculate raster width and height */
 
-  width = (int) ((cln->currentRegion.east - cln->currentRegion.west) / 
-		 cln->currentRegion.ew_res);
-  height = (int) ((cln->currentRegion.north - cln->currentRegion.south) / 
-		  cln->currentRegion.ns_res);
+  width = (int) (((cln->currentRegion.east - cln->currentRegion.west) / 
+		 cln->currentRegion.ew_res) + 0.5);
+  height = (int)(((cln->currentRegion.north - cln->currentRegion.south) / 
+		  cln->currentRegion.ns_res) + 0.5);
+
+  if( width < 1 )
+      width = 1;
+  if( height < 1 )
+      height = 1;
 
   /* Assign points and return result */
 
