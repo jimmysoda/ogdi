@@ -17,6 +17,9 @@
  ******************************************************************************
  *
  * $Log: feature.c,v $
+ * Revision 1.11  2003/05/22 17:04:05  warmerda
+ * Removed debug statement.
+ *
  * Revision 1.10  2003/05/22 16:58:01  warmerda
  * Several fixes related to reading VITD area geometries properly even if
  * the datasets face information seems to be corrupt.  See bug:
@@ -44,7 +47,7 @@
 #include "vrf.h"
 #include <assert.h>
 
-ECS_CVSID("$Id: feature.c,v 1.10 2003/05/22 16:58:01 warmerda Exp $");
+ECS_CVSID("$Id: feature.c,v 1.11 2003/05/22 17:04:05 warmerda Exp $");
 
 vpf_projection_type NOPROJ = {DDS, 0.0, 0.0, 0.0, 0.0, 0, 0.0, 0.0,
                               NULL, NULL, "Decimal Degrees     "};
@@ -704,9 +707,6 @@ int vrf_get_area_feature (s, layer, prim_id)
   }
   
   area.rings[n]->id = n+1;
-
-  if( prim_id == 231 )
-      printf( "reading ring(s) for prim_id %d\n", prim_id );
 
   if (!vrf_get_ring_coords (s,area.rings[n], prim_id, ring_rec.edge, edgetable)) {
     xvt_free((char*)area.rings[0]);
