@@ -88,6 +88,10 @@
  */
 
 #include <stdio.h>
+#include <string.h>
+#ifdef __GNU_LIBRARY__
+#include <ogdi_macro.h>
+#endif
 
 #ifdef USE_DBMALLOC
 #include <dbmalloc.h>
