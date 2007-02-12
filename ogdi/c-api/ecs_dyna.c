@@ -17,6 +17,10 @@
  ******************************************************************************
  *
  * $Log: ecs_dyna.c,v $
+ * Revision 1.5  2007/02/12 18:06:31  cbalint
+ *         Hide plugins from system libs path.
+ *         Release versioning using sonames.
+ *
  * Revision 1.4  2004/02/18 21:50:21  warmerda
  * Added debug statement #ifdefed out.
  *
@@ -27,7 +31,7 @@
 
 #include "ecs.h"
 
-ECS_CVSID("$Id: ecs_dyna.c,v 1.4 2004/02/18 21:50:21 warmerda Exp $");
+ECS_CVSID("$Id: ecs_dyna.c,v 1.5 2007/02/12 18:06:31 cbalint Exp $");
 
 #if !defined(MISSING_DLFCN_H)
 #include <dlfcn.h>
@@ -76,9 +80,29 @@ void *ecs_OpenDynamicLib(libname)
     return (void *) handle;
   }
 #else
+#if !defined(MODULES_PATH)
+#define MODULES_PATH "/usr/lib/ogdi/"
+#endif
   void *handle;
 
   handle = dlopen(libname,RTLD_LAZY);
+  if (handle != NULL)
+    return handle;
+
+  if ((temp = (char *) malloc(strlen(MODULES_PATH)+strlen(libname)+1)) == NULL)
+    return NULL;
+  sprintf(temp,MODULES_PATH "%s",libname);
+  handle = dlopen(temp,RTLD_LAZY);
+  free(temp);
+  if (handle != NULL)
+    return handle;
+
+  if ((temp = (char *) malloc(strlen(MODULES_PATH)+strlen(libname)+7)) == NULL)
+    return NULL;
+  sprintf(temp,MODULES_PATH "lib%s.so",libname);
+  handle = dlopen(temp,RTLD_LAZY);
+  free(temp);
+
   if (handle == NULL) {
     /* Try with the .so extension */
 
