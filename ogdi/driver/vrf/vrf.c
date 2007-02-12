@@ -17,6 +17,9 @@
  ******************************************************************************
  *
  * $Log: vrf.c,v $
+ * Revision 1.18  2007/02/12 21:01:48  cbalint
+ *      Fix win32 target. It build and works now. (tested with VC6)
+ *
  * Revision 1.17  2007/02/12 15:52:57  cbalint
  *
  *    Preliminary cleanup.
@@ -58,7 +61,7 @@
 #include "vrf.h"
 #include "datadict.h"
 
-ECS_CVSID("$Id: vrf.c,v 1.17 2007/02/12 15:52:57 cbalint Exp $");
+ECS_CVSID("$Id: vrf.c,v 1.18 2007/02/12 21:01:48 cbalint Exp $");
 
 /* layer oriented functions are keeped in data structure to simplify code */
 
@@ -99,8 +102,6 @@ ecs_Result *dyn_CreateServer(s,Request)
   printf("dyn_CreateServer\n");
 #endif
 
-  sleep(0);
-  
   spriv = s->priv = (void *) calloc(1,sizeof(ServerPrivateData));
   if (s->priv == NULL) {
     ecs_SetError(&(s->result), 1, "Could not create VRF server, not enough memory");

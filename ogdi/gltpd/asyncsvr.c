@@ -17,6 +17,9 @@
  ******************************************************************************
  *
  * $Log: asyncsvr.c,v $
+ * Revision 1.6  2007/02/12 21:01:48  cbalint
+ *      Fix win32 target. It build and works now. (tested with VC6)
+ *
  * Revision 1.5  2007/02/12 16:09:06  cbalint
  *   *  Add hook macros for all GNU systems, hook fread,fwrite,read,fgets.
  *   *  Handle errors in those macro, if there are any.
@@ -43,11 +46,10 @@
  */
 
 #include "ecs.h"
-#ifdef __GNU_LIBRARY__
-#include <ogdi_macro.h>
-#endif
 
-ECS_CVSID("$Id: asyncsvr.c,v 1.5 2007/02/12 16:09:06 cbalint Exp $");
+#include <ogdi_macro.h>
+
+ECS_CVSID("$Id: asyncsvr.c,v 1.6 2007/02/12 21:01:48 cbalint Exp $");
 
 #ifdef _WINDOWS
 #  include "rpc/pmap_cln.h"
