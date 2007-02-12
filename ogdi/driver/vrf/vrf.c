@@ -17,6 +17,11 @@
  ******************************************************************************
  *
  * $Log: vrf.c,v $
+ * Revision 1.17  2007/02/12 15:52:57  cbalint
+ *
+ *    Preliminary cleanup.
+ *    Get rif of unitialized variables, and unused ones.
+ *
  * Revision 1.16  2006/05/05 19:10:54  warmerda
  * VRF fix when doing feature merging with index sizing (ie. with DNC 13 dataset)
  *
@@ -53,7 +58,7 @@
 #include "vrf.h"
 #include "datadict.h"
 
-ECS_CVSID("$Id: vrf.c,v 1.16 2006/05/05 19:10:54 warmerda Exp $");
+ECS_CVSID("$Id: vrf.c,v 1.17 2007/02/12 15:52:57 cbalint Exp $");
 
 /* layer oriented functions are keeped in data structure to simplify code */
 
@@ -699,9 +704,9 @@ ecs_Result *dyn_GetAttributesFormat(s)
 {
   int i;
   register LayerPrivateData *lpriv;
-  ecs_AttributeFormat type;
-  int length;
-  int precision;
+  ecs_AttributeFormat type=0;
+  int length=0;
+  int precision=0;
 
   lpriv = (LayerPrivateData *) s->layer[s->currentLayer].priv;
 

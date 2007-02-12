@@ -18,6 +18,11 @@
  ******************************************************************************
  *
  * $Log: vrfswq.c,v $
+ * Revision 1.6  2007/02/12 15:52:57  cbalint
+ *
+ *    Preliminary cleanup.
+ *    Get rif of unitialized variables, and unused ones.
+ *
  * Revision 1.5  2004/10/25 21:24:43  warmerda
  * Fixed case of 1 character wide fields as per Stephane's submission
  * in bug 809737.
@@ -42,7 +47,7 @@
 #include "vrf.h"
 #include "swq.h"
 
-ECS_CVSID("$Id: vrfswq.c,v 1.5 2004/10/25 21:24:43 warmerda Exp $");
+ECS_CVSID("$Id: vrfswq.c,v 1.6 2007/02/12 15:52:57 cbalint Exp $");
 
 #ifndef __LINKLIST_H__
 #include "linklist.h"
@@ -89,7 +94,7 @@ int vrf_swq_evaluator( swq_field_op *op, void *raw_info )
     vpf_table_type  table = info->table;
 
 /* -------------------------------------------------------------------- */
-/*      String field comparison.
+/*      String field comparison.                                        */
 /* -------------------------------------------------------------------- */
     if( table.header[op->field_index].type == 'T' )
     {
