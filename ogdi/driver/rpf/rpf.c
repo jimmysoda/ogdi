@@ -17,6 +17,13 @@
  ******************************************************************************
  *
  * $Log: rpf.c,v $
+ * Revision 1.13  2007/02/24 16:58:17  cbalint
+ *     Clear olso tilestruct while freeing memory in dyn_freelayerpriv()
+ *     glibc mtrace() reports zero malloc problems now.
+ *     Thanks to djdejohn for the report !
+ *  Modified Files:
+ *  	ChangeLog ogdi/driver/rpf/rpf.c
+ *
  * Revision 1.12  2004/03/26 22:33:41  warmerda
  * Fixed computation of nbfeature in dyn_SelectRegion() to avoid rounding
  * error issues.  As per Bug 924250.
@@ -44,7 +51,7 @@
 #include "rpf.h"
 #include "datadict.h"
 
-ECS_CVSID("$Id: rpf.c,v 1.12 2004/03/26 22:33:41 warmerda Exp $");
+ECS_CVSID("$Id: rpf.c,v 1.13 2007/02/24 16:58:17 cbalint Exp $");
 
 int colorintensity[6] = {0,63,105,147,189,255};
 
@@ -171,6 +178,10 @@ void dyn_freelayerpriv(lpriv)
       free(lpriv->buffertile);
       lpriv->buffertile = NULL;
     }
+    
+   /* empty tilestruct */
+   ecs_TileDeleteAllLines (&(lpriv->tilestruct));
+    
     if (lpriv->ff != NULL) 
       free(lpriv->ff);
     if (lpriv->rgb_pal != NULL) 
