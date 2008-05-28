@@ -19,6 +19,9 @@
  ******************************************************************************
  *
  * $Log: ecs_util.h,v $
+ * Revision 1.24  2008/05/28 01:47:03  cbalint
+ *    * prepare 3.2.0.beta2
+ *
  * Revision 1.23  2007/05/09 21:41:24  cbalint
  * 3.2.0beta2 release
  *
@@ -82,7 +85,7 @@
 #define ECS_UTIL 1
 
 #define OGDI_VERSION     320
-#define OGDI_RELEASEDATE 20070509
+#define OGDI_RELEASEDATE 20080528
 
 #include <stdio.h>
 #include <stdlib.h>
