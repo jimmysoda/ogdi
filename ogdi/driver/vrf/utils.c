@@ -17,6 +17,9 @@
  ******************************************************************************
  *
  * $Log: utils.c,v $
+ * Revision 1.18  2008/05/28 00:18:21  cbalint
+ *    * fix minor printf format gcc warnings.
+ *
  * Revision 1.17  2007/05/09 20:46:28  cbalint
  * From: Even Rouault <even.rouault@mines-paris.org>
  * Date: Friday 21:14:18
@@ -95,7 +98,7 @@
 #include "vrf.h"
 #include "vpfprop.h"
 
-ECS_CVSID("$Id: utils.c,v 1.17 2007/05/09 20:46:28 cbalint Exp $");
+ECS_CVSID("$Id: utils.c,v 1.18 2008/05/28 00:18:21 cbalint Exp $");
 
 #ifdef _WINDOWS
 #define SEPARATOR '\\'
@@ -1827,7 +1830,7 @@ int vrf_feature_class_dictionary(s,request)
 		free(tval);break;
 	      case 'I':
 		get_table_element(val_pos,row,table,&ival,&n);
-		sprintf(buffer,"    %12ld =  %s  \n",ival,des_buf);
+		sprintf(buffer,"    %12d =  %s  \n",ival,des_buf);
 		if (!ecs_AddText(&(s->result),buffer)) {
 		  free(fclass); free(coverage); free(expression); return FALSE;
 		}
