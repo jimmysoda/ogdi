@@ -18,6 +18,9 @@
  ******************************************************************************
  *
  * $Log: client.c,v $
+ * Revision 1.16  2008/05/28 01:34:30  cbalint
+ *    * Convert this file to UTF-8
+ *
  * Revision 1.15  2007/02/19 19:31:33  cbalint
  *    Reimplement Matrix algebra under an opensource compatible license.
  *  Modified Files:
@@ -62,7 +65,7 @@
 #include "matrix.h"
 #include <assert.h>
 
-ECS_CVSID("$Id: client.c,v 1.15 2007/02/19 19:31:33 cbalint Exp $");
+ECS_CVSID("$Id: client.c,v 1.16 2008/05/28 01:34:30 cbalint Exp $");
 
 /* 
    Definitions specific to c_interface 
@@ -2714,7 +2717,7 @@ int cln_ConvRegion(ClientID,gr,direction)
       
    DESCRIPTION
       Convert a geographical point from the target geographic
-      projection (client) to the source projectioné
+      projection (client) to the source projectionÃ©
    END_DESCRIPTION
   
    PARAMETERS
