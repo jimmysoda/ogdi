@@ -17,6 +17,9 @@
  ******************************************************************************
  *
  * $Log: feature.c,v $
+ * Revision 1.17  2009/05/08 04:15:50  warmerda
+ * fixed count type in VRF driver for 64bit systems (#2787502)
+ *
  * Revision 1.16  2007/05/09 20:46:28  cbalint
  * From: Even Rouault <even.rouault@mines-paris.org>
  * Date: Friday 21:14:18
@@ -106,7 +109,7 @@
 #include "vrf.h"
 #include <assert.h>
 
-ECS_CVSID("$Id: feature.c,v 1.16 2007/05/09 20:46:28 cbalint Exp $");
+ECS_CVSID("$Id: feature.c,v 1.17 2009/05/08 04:15:50 warmerda Exp $");
 
 vpf_projection_type NOPROJ = {DDS, 0.0, 0.0, 0.0, 0.0, 0, 0.0, 0.0,
                               NULL, NULL, "Decimal Degrees     "};
@@ -1347,7 +1350,7 @@ char *vrf_get_ObjAttributes(table, row_pos)
   short int temp4;
   int temp5;
   date_type temp6;
-  long count;
+  int32 count;
 
   if (returnString != NULL) {
     free(returnString);
