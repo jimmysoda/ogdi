@@ -1,0 +1,2 @@
+cbalint = Cristian Balint <rezso@rdsor.ro>
+warmerda = Frank Warmerdam <warmerdam@pobox.com>
