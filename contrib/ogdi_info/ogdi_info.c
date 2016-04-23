@@ -61,6 +61,9 @@
  * added copyright header
  *
  */
+#ifdef _MSC_VER
+#define _WINREG_ /* avoid PVALUE conflict */
+#endif
 
 #include "ecs.h"
 #include "projects.h"

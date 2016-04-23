@@ -29,6 +29,7 @@
  *
  */
 
+#define _WINREG_
 #include "ecs.h"
 
 ECS_CVSID("$Id: ecs_dyna.c,v 1.5 2007/02/12 18:06:31 cbalint Exp $");

@@ -42,6 +42,10 @@
 static char sccsid[] = "@(#)xdr_float.c 1.12 87/08/11 Copyr 1984 Sun Micro";
 #endif
 
+#ifdef _AMD64_
+#define _X86_ _AMD64_
+#endif
+
 /*
  * xdr_float.c, Generic XDR routines impelmentation.
  *

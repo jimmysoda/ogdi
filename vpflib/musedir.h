@@ -2,6 +2,8 @@
 #ifndef H_MUSEDIR
 #define H_MUSEDIR
 
+#include <stdint.h>
+
 #ifndef INCL_XVTH
 #include "xvt.h"
 #endif
@@ -77,11 +79,3 @@ void muse_check_path ();
 
 
 #endif  /* H_MUSEDIR */
-
-
-
-
-
-
-
-

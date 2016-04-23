@@ -21,6 +21,10 @@ typedef struct
 #define MACHINE_BYTE_ORDER LEAST_SIGNIFICANT
 #endif
 
+#ifdef _MSC_VER
+#include <stdint.h>
+#endif
+
 #ifdef _WINDOWS
 #  define DOS 1
 #else  /* Not _WINDOWS */

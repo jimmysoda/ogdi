@@ -33,32 +33,3 @@ _$*
 core
 
 # Project ignores (converted from .cvsignore files)
-/proj/OBJ.*
-/ogdi/driver/adrg/OBJ.*
-/ogdi/driver/network/OBJ.*
-/ogdi/driver/dted/OBJ.*
-/ogdi/driver/rpf/OBJ.*
-/ogdi/driver/skeleton/OBJ.*
-/ogdi/driver/vrf/OBJ.*
-/ogdi/datum_driver/canada/OBJ.*
-/ogdi/datum_driver/usa/OBJ.*
-/ogdi/tcl_interface/OBJ.*
-/ogdi/gltpd/OBJ.*
-/ogdi/examples/example2/OBJ.*
-/ogdi/examples/example1/OBJ.*
-/ogdi/glutil/OBJ.*
-/ogdi/c-api/OBJ.*
-/vpflib/OBJ.*
-/lib/win32/*.exp
-/lib/win32/*.lib
-/lib/linux
-/lib/solaris
-/contrib/ogdi_import/OBJ.*
-/contrib/ogdi_info/OBJ.*
-/contrib/gdal/OBJ.*
-/external/expat/OBJ.*
-/external/zlib/OBJ.*
-/bin
-/config.status
-/config.log
-/config.cache

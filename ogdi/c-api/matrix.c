@@ -84,9 +84,10 @@ void mat_mul_transposed (matrix_a, height_a, width_a, matrix_b, height_b, width_
  */
 int mat_inverse (double **matrix,int n)
 {
+    int res = -1;
     int i, j, k, l, ir=0, ic=0 ;
-    int ipivot[n], itemp[n][2];
-    double pivot[n], t;
+    int *ipivot = calloc(n, sizeof(int)), **itemp = calloc(n, 2*sizeof(int));
+    double *pivot = calloc(n,sizeof(double)), t;
     double fabs();
 
     /* initialization */
@@ -116,10 +117,10 @@ int mat_inverse (double **matrix,int n)
                         }
                         break;
                     case  1:
-                        return (-1);
+		    	goto exit;
                         break;
                     default: /* shouldn't get here */
-                        return (-1);
+		    	goto exit;
                         break;
                 }
         }
@@ -127,7 +128,7 @@ int mat_inverse (double **matrix,int n)
         ipivot[ic] += 1;
         if (ipivot[ic] > 1) /* check for dependency */
                 {
-            return (-1);
+            goto exit;
                 }
 
         /* interchange rows to put pivot element on diagonal */
@@ -146,7 +147,7 @@ int mat_inverse (double **matrix,int n)
         /* check for zero pivot */
         if (fabs (pivot[i]) < EPSILON)
                 {
-            return (-1);
+            goto exit;
                 }
 
         /* divide pivot row by pivot element */
@@ -185,7 +186,13 @@ int mat_inverse (double **matrix,int n)
         }
     }
 
-    return 1;
+    res = 1;
+
+exit:
+    free(ipivot);
+    free(itemp);
+    free(pivot);
+    return res;
 }
 
 /*

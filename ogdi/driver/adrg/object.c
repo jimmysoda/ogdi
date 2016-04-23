@@ -39,6 +39,7 @@
  *
  */
 
+#define _WINREG_
 #include "ecs.h"
 #include "adrg.h"
 

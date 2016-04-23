@@ -45,6 +45,8 @@
  *
  */
 
+#define _WINREG_
+
 #include "ecs.h"
 #include <sys/stat.h>
 #ifdef _WINDOWS

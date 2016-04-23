@@ -36,8 +36,9 @@
    char *justify (char *str);
    int Mstrcmpi (const char *string1, const char *string2);
    int Mstrncmpi (const char *string1, const char *string2, size_t size);
+#elif _MSC_VER
+#include <stdint.h>
 #else
-
    char *strupr ();
    char *strlwr ();
    char *leftjust ();

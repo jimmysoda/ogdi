@@ -81,6 +81,10 @@
 #define OGDI_VERSION     320
 #define OGDI_RELEASEDATE 20070224
 
+#ifdef _MSC_VER
+#define _WINREG_ /* avoid PVALUE conflict */
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -114,6 +118,7 @@
 
 #ifdef _WINDOWS
 #include <signal.h>
+#include <stdint.h>
 #define alarm(a) printf("")
 #endif
 

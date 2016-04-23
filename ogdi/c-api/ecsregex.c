@@ -56,6 +56,7 @@
  * ***    code multi-thread safe.                                ***
  */
 
+#define _WINREG_
 #include "ecs.h"
 
 ECS_CVSID("$Id: ecsregex.c,v 1.2 2001/04/09 15:04:34 warmerda Exp $");

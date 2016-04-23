@@ -48,6 +48,7 @@
 #include "ecs.h"
 #include <sys/stat.h>
 #ifdef _WINDOWS
+#undef _WINREG_
 #include <direct.h>
 #include "compat/dirent.h"
 #else

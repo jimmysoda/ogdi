@@ -83,7 +83,7 @@ BIG_ENDIAN          = 0
 #
 
 WINCPP_DEBUG	= /EHsc /D_DEBUG /Zi $(CPP_DEBUG) 
-WINCPP_RELEASE	= /EHsc /Gi- /Gy /Od /DNDEBUG $(CPP_RELEASE) 
+WINCPP_RELEASE	= /EHsc /Gy /Od /DNDEBUG $(CPP_RELEASE) 
 LINK_DEBUG	= /DEBUG /INCREMENTAL:no /FIXED:NO
 LINK_RELEASE	= /INCREMENTAL:no /OPT:REF
 
@@ -130,10 +130,9 @@ SYS_INCLUDE     = $(INCL_SW)$(TOPDIR)/include/win32/sys
 # Library locations for link command
 
 WIN_LINKLIB           =  user32.lib gdi32.lib wsock32.lib advapi32.lib kernel32.lib
-LXLIB_LINKLIB         = $(LIBDIR)/lxlib.lib
+#LXLIB_LINKLIB         = $(LIBDIR)/lxlib.lib
 ODBC_LINKLIB          = odbc32.lib odbccp32.lib
 RPC_LINKLIB           = $(LIBDIR)/static/rpc.lib
-
 
 #
 # rules

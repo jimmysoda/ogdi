@@ -24,9 +24,26 @@
   It is provided "as is" without express or implied warranty.
   
   ********************************************************************/
+#ifdef _MSC_VER
+#define _WINREG_
+#endif
 
+#ifdef _MSC_VER
+#define TRUE 1
+#define FALSE 0
+#include <string.h>
+#define PJ_LIB__
+#include "../../proj/projects.h"
+#define lint
+#include "../../proj/nad_init.c"
+#include "../../proj/nad_cvt.c"
+#include "../../proj/nad_interp.c"
+#include "../../proj/pj_open_lib.c"
+#undef lint
+#else
 #include "ecs.h"
 #include "projects.h"
+#endif
 
 typedef struct {
   struct CTABLE *dtptr;
@@ -234,21 +251,21 @@ int dyn_nad_forward(privdata,x,y)
      double *y;
 {
   datuminfo *ptr = (datuminfo *) privdata;
-  projUV val,val1;
+  LP val,val1;
 
   if (ptr == NULL) return TRUE;
 
   if (ptr->dtptr == NULL)
     return TRUE;
 
-  val.u = *x * DEG_TO_RAD;
-  val.v = *y * DEG_TO_RAD;
+  val.lam = *x * DEG_TO_RAD;
+  val.phi = *y * DEG_TO_RAD;
 
   val1 = nad_cvt(val,0,ptr->dtptr);
 
-  if (val1.u != HUGE_VAL && val1.v != HUGE_VAL) {
-    *x = val1.u * RAD_TO_DEG;
-    *y = val1.v * RAD_TO_DEG;
+  if (val1.lam != HUGE_VAL && val1.phi != HUGE_VAL) {
+    *x = val1.lam * RAD_TO_DEG;
+    *y = val1.phi * RAD_TO_DEG;
   }
 
   return TRUE;
@@ -301,21 +318,21 @@ int dyn_nad_reverse(privdata,x,y)
      double *y;
 {
   datuminfo *ptr = (datuminfo *) privdata;
-  projUV val,val1;
+  LP val,val1;
 
   if (ptr == NULL) return TRUE;
 
   if (ptr->dtptr == NULL)
     return TRUE;
 
-  val.u = *x * DEG_TO_RAD;
-  val.v = *y * DEG_TO_RAD;
+  val.lam = *x * DEG_TO_RAD;
+  val.phi = *y * DEG_TO_RAD;
 
   val1 = nad_cvt(val,1,ptr->dtptr);
 
-  if (val1.u != HUGE_VAL && val1.v != HUGE_VAL) {
-    *x = val1.u * RAD_TO_DEG;
-    *y = val1.v * RAD_TO_DEG;
+  if (val1.lam != HUGE_VAL && val1.phi != HUGE_VAL) {
+    *x = val1.lam * RAD_TO_DEG;
+    *y = val1.phi * RAD_TO_DEG;
   }
 
   return TRUE;
@@ -327,6 +344,7 @@ int dyn_nad_reverse(privdata,x,y)
  * When the DLL is being unloaded, make sure to destroy all of
  * the clients that remain open.
  */
+#include <windows.h>
 BOOL WINAPI 
 DllMain( HINSTANCE  hinstDLL,   // handle of DLL module 
          DWORD  fdwReason,      // reason for calling function 
@@ -352,3 +370,4 @@ DllMain( HINSTANCE  hinstDLL,   // handle of DLL module
   return TRUE;
 }
 #endif
+
